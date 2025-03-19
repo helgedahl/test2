@@ -1,9 +1,13 @@
 name: deploy
 
+#on:
+#  registry_package:
+#    types: [published, updated]
+#    package_type: container
+
 on:
-  registry_package:
-    types: [published, updated]
-    package_type: container
+  repository_dispatch:
+    types: [package_published]
 
 jobs:
   update-gitops:
@@ -13,6 +17,7 @@ jobs:
       
       - name: Echo image tag
         run: |
+          PACKAGE="${{ github.event.client_payload.package }}"
           # Extract the tag from the event
-          IMAGE_TAG="${{ github.event.registry_package.package_version.container_metadata.tag.name }}"
-          echo ${IMAGE_TAG}
+          # IMAGE_TAG="${{ github.event.registry_package.package_version.container_metadata.tag.name }}"
+          # echo ${IMAGE_TAG}
