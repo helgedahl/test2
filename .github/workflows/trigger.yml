@@ -18,6 +18,7 @@ jobs:
       - name: Echo image tag
         run: |
           PACKAGE="${{ github.event.client_payload.package }}"
+          echo ${PACKAGE}
           # Extract the tag from the event
           # IMAGE_TAG="${{ github.event.registry_package.package_version.container_metadata.tag.name }}"
           # echo ${IMAGE_TAG}
