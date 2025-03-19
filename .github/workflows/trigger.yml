@@ -1,0 +1,18 @@
+name: deploy
+
+on:
+  registry_package:
+    types: [published, updated]
+    package_type: container
+
+jobs:
+  update-gitops:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Echo image tag
+        run: |
+          # Extract the tag from the event
+          IMAGE_TAG="${{ github.event.registry_package.package_version.container_metadata.tag.name }}"
+          echo ${IMAGE_TAG}
